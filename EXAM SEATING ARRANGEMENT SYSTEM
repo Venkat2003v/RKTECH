@@ -1,98 +1,83 @@
-import java.util.ArrayList;
+import java.util.*;
 
-// Define the Item class to represent individual items in the supply chain
-class Item {
-    private String name;
-    private double cost;
+class User {
+    private String username;
+    private String password;
 
-    public Item(String name, double cost) {
-        this.name = name;
-        this.cost = cost;
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public double getCost() {
-        return cost;
-    }
-}
-
-// Define the Manufacturer class to represent the manufacturer in the supply chain
-class Manufacturer {
-    private ArrayList<Item> selectedItems;
-
-    public Manufacturer() {
-        selectedItems = new ArrayList<>();
-    }
-
-    // Method for selecting items based on customer requirements
-    public void selectItems(ArrayList<Item> itemList) {
-        selectedItems.addAll(itemList);
-    }
-
-    // Method for processing selected items and starting production
-    public void startProduction() {
-        // Perform production process
-        System.out.println("Production started for selected items.");
-    }
-
-    // Method for generating bill
-    public double generateBill() {
-        double totalCost = 0;
-        for (Item item : selectedItems) {
-            totalCost += item.getCost();
-        }
-        return totalCost;
+    public String getPassword() {
+        return password;
     }
 }
 
-// Define the Customer class to represent the customer in the supply chain
-class Customer {
-    private ArrayList<Item> itemRequirements;
-
-    public Customer() {
-        itemRequirements = new ArrayList<>();
+class Admin extends User {
+    public Admin(String username, String password) {
+        super(username, password);
     }
 
-    // Method for specifying item requirements
-    public void specifyRequirements(ArrayList<Item> itemList) {
-        itemRequirements.addAll(itemList);
-    }
-
-    // Method for receiving the final product
-    public void receiveProduct() {
-        System.out.println("Product received from manufacturer.");
+    public void generateSeatingArrangement(List<Student> students, List<Seat> seats) {
+        // Logic to generate seating arrangement
+        // This can be customized based on specific requirements
     }
 }
 
-// Main class representing the supply chain management system
-public class SupplyChainManagementSystem {
+class Student extends User {
+    private String rollNumber;
+
+    public Student(String username, String password, String rollNumber) {
+        super(username, password);
+        this.rollNumber = rollNumber;
+    }
+
+    public String getRollNumber() {
+        return rollNumber;
+    }
+}
+
+class Seat {
+    private String classRoom;
+    private int seatNumber;
+
+    public Seat(String classRoom, int seatNumber) {
+        this.classRoom = classRoom;
+        this.seatNumber = seatNumber;
+    }
+
+    public String getClassRoom() {
+        return classRoom;
+    }
+
+    public int getSeatNumber() {
+        return seatNumber;
+    }
+}
+
+public class ExamSeatingSystem {
     public static void main(String[] args) {
-        // Instantiate Manufacturer, Customer, and some example items
-        Manufacturer manufacturer = new Manufacturer();
-        Customer customer = new Customer();
-        ArrayList<Item> itemList = new ArrayList<>();
-        itemList.add(new Item("Raw Material 1", 50));
-        itemList.add(new Item("Raw Material 2", 70));
-        itemList.add(new Item("Raw Material 3", 30));
+        // Sample data
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("student1", "pass1", "Roll001"));
+        students.add(new Student("student2", "pass2", "Roll002"));
 
-        // Customer specifies requirements
-        customer.specifyRequirements(itemList);
+        List<Seat> seats = new ArrayList<>();
+        seats.add(new Seat("Room A", 101));
+        seats.add(new Seat("Room A", 102));
+        seats.add(new Seat("Room A", 103));
+        seats.add(new Seat("Room B", 201));
+        seats.add(new Seat("Room B", 202));
+        seats.add(new Seat("Room B", 203));
 
-        // Manufacturer selects items based on customer requirements
-        manufacturer.selectItems(itemList);
+        Admin admin = new Admin("admin", "adminpass");
 
-        // Manufacturer starts production
-        manufacturer.startProduction();
-
-        // Manufacturer generates bill
-        double totalBill = manufacturer.generateBill();
-        System.out.println("Total bill: $" + totalBill);
-
-        // Customer receives product
-        customer.receiveProduct();
+        // Example usage:
+        // admin.generateSeatingArrangement(students, seats);
     }
 }
-
