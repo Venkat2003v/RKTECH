@@ -1,1 +1,55 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class DataVisualizationTool extends JFrame {
+    private final int NUM_HUBS = 10;
+    private final int HUB_SIZE = 50;
+    private boolean[] hubAvailability;
+
+    public DataVisualizationTool() {
+        setTitle("Network Hub Availability");
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Initialize hub availability array
+        hubAvailability = new boolean[NUM_HUBS];
+        for (int i = 0; i < NUM_HUBS; i++) {
+            hubAvailability[i] = Math.random() < 0.5; // Randomly set initial availability
+        }
+
+        // Add mouse listener to toggle hub availability on click
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int clickedHub = e.getX() / HUB_SIZE; // Calculate which hub was clicked
+                if (clickedHub >= 0 && clickedHub < NUM_HUBS) {
+                    hubAvailability[clickedHub] = !hubAvailability[clickedHub];
+                    repaint(); // Redraw the visualization
+                }
+            }
+        });
+
+        setVisible(true);
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+
+        // Draw hubs
+        for (int i = 0; i < NUM_HUBS; i++) {
+            int x = i * HUB_SIZE;
+            int y = getHeight() / 2 - HUB_SIZE / 2;
+            Color color = hubAvailability[i] ? Color.GREEN : Color.RED;
+            g.setColor(color);
+            g.fillOval(x, y, HUB_SIZE, HUB_SIZE);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(DataVisualizationTool::new);
+    }
+}
 
