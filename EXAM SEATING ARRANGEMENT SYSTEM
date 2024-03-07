@@ -1,1 +1,98 @@
+import java.util.ArrayList;
+
+// Define the Item class to represent individual items in the supply chain
+class Item {
+    private String name;
+    private double cost;
+
+    public Item(String name, double cost) {
+        this.name = name;
+        this.cost = cost;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+}
+
+// Define the Manufacturer class to represent the manufacturer in the supply chain
+class Manufacturer {
+    private ArrayList<Item> selectedItems;
+
+    public Manufacturer() {
+        selectedItems = new ArrayList<>();
+    }
+
+    // Method for selecting items based on customer requirements
+    public void selectItems(ArrayList<Item> itemList) {
+        selectedItems.addAll(itemList);
+    }
+
+    // Method for processing selected items and starting production
+    public void startProduction() {
+        // Perform production process
+        System.out.println("Production started for selected items.");
+    }
+
+    // Method for generating bill
+    public double generateBill() {
+        double totalCost = 0;
+        for (Item item : selectedItems) {
+            totalCost += item.getCost();
+        }
+        return totalCost;
+    }
+}
+
+// Define the Customer class to represent the customer in the supply chain
+class Customer {
+    private ArrayList<Item> itemRequirements;
+
+    public Customer() {
+        itemRequirements = new ArrayList<>();
+    }
+
+    // Method for specifying item requirements
+    public void specifyRequirements(ArrayList<Item> itemList) {
+        itemRequirements.addAll(itemList);
+    }
+
+    // Method for receiving the final product
+    public void receiveProduct() {
+        System.out.println("Product received from manufacturer.");
+    }
+}
+
+// Main class representing the supply chain management system
+public class SupplyChainManagementSystem {
+    public static void main(String[] args) {
+        // Instantiate Manufacturer, Customer, and some example items
+        Manufacturer manufacturer = new Manufacturer();
+        Customer customer = new Customer();
+        ArrayList<Item> itemList = new ArrayList<>();
+        itemList.add(new Item("Raw Material 1", 50));
+        itemList.add(new Item("Raw Material 2", 70));
+        itemList.add(new Item("Raw Material 3", 30));
+
+        // Customer specifies requirements
+        customer.specifyRequirements(itemList);
+
+        // Manufacturer selects items based on customer requirements
+        manufacturer.selectItems(itemList);
+
+        // Manufacturer starts production
+        manufacturer.startProduction();
+
+        // Manufacturer generates bill
+        double totalBill = manufacturer.generateBill();
+        System.out.println("Total bill: $" + totalBill);
+
+        // Customer receives product
+        customer.receiveProduct();
+    }
+}
 
